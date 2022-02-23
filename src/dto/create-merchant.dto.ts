@@ -15,3 +15,6 @@ export class CreateMerchantDto {
     paymentOption:  string[] 
 
   }
+  export class FilterMerchantDto{
+    search:String
+  }

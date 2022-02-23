@@ -1,21 +1,29 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { MerchantsService } from './merchants.service';
-import { CreateMerchantDto } from './dto/create-merchant.dto';
+import { CreateMerchantDto, FilterMerchantDto } from './dto/create-merchant.dto';
 import { Merchant } from './schemas/merchant.schema';
 
-@Controller("merchant")
+@Controller('merchant')
 export class MerchantsController {
   constructor(private readonly merchantsService: MerchantsService) {}
 
-  @Post("/create")
+  @Post('/create')
   async create(@Body() createMerchantDto: CreateMerchantDto) {
-      console.log(createMerchantDto)
     await this.merchantsService.create(createMerchantDto);
   }
 
-  @Get("/allDetails")
-  async findAll(): Promise<Merchant[]> {
-    return await this.merchantsService.findAll();
+  @Post('/allDetails/:dataSkip')
+  async findAll(@Body() filterValues:FilterMerchantDto ,@Param("dataSkip") dataSkip:number): Promise<Merchant[]> {
+    return await this.merchantsService.findAll(filterValues,dataSkip);
   }
 
   @Get('/:id')
@@ -28,7 +36,15 @@ export class MerchantsController {
     return await this.merchantsService.delete(id);
   }
   @Patch('/:id')
- async update(@Param('id') id: string, @Body() updateMerchantDto: CreateMerchantDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateMerchantDto: CreateMerchantDto,
+  ) {
     return await this.merchantsService.update(id, updateMerchantDto);
   }
+  @Post('/pageCount')
+  async pageCount() {
+   return await this.merchantsService.pageCount();
+  }
+
 }
