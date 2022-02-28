@@ -1,13 +1,13 @@
 export class CreateMerchantDto {
-    userName:  String 
-    email:  String 
-    phoneNumber:  Number 
-    website:  String 
-    contactName:  String 
-    contactPhone:  String 
-    contactEmail:  String 
-    notes:  String 
-    typeOfBusiness: String 
+    userName:  string 
+    email:  string 
+    phoneNumber:  string 
+    website:  string 
+    contactName:  string 
+    contactPhone:  string 
+    contactEmail:  string 
+    notes:  string 
+    typeOfBusiness: string 
     catageryOfBusiness:  string[] 
     comissionPercentage:  Number 
     activeFrom:  Date 
@@ -16,5 +16,7 @@ export class CreateMerchantDto {
 
   }
   export class FilterMerchantDto{
-    search:String
+    search:string
+    sortBy:string
+    sortOrder:number
   }

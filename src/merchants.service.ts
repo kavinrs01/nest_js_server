@@ -21,17 +21,28 @@ export class MerchantsService {
     return updatedMerchant;
   }
   async create(createMerchantDto: CreateMerchantDto): Promise<Merchant> {
-    const createdMerchant = await this.merchantModel.create(createMerchantDto);
+    const createdMerchant = await this.merchantModel.create({...createMerchantDto,isDelete:false});
     return createdMerchant;
   }
 
-  async findAll(filterValues: FilterMerchantDto,dataSkip:number): Promise<Merchant[]> {
+  async findAll(
+    filterValues: FilterMerchantDto,
+    dataSkip: number,
+  ): Promise<Merchant[]> {
     return await this.merchantModel
       .find(
         filterValues.search
-          ?{ $or: [ { userName: filterValues.search}, { email:filterValues.search } ] }
-          : null,
-      ).sort({userName:1}).skip(dataSkip).limit(10)
+          ? {
+             $and:[{ $or: [
+                { userName: { $regex: filterValues.search, $options: 'i' } },
+                { email: { $regex: filterValues.search, $options: 'i' } }
+              ]},{isDelete:false}]
+            }
+          : {isDelete:false},
+      )
+      .sort({[filterValues.sortBy]:filterValues.sortOrder})
+      .skip(dataSkip)
+      .limit(10)
       .exec();
   }
 
@@ -41,13 +52,24 @@ export class MerchantsService {
 
   async delete(id: string) {
     const deletedMerchant = await this.merchantModel
-      .findByIdAndRemove({ _id: id })
+      .findByIdAndUpdate(id,{ isDelete: true })
       .exec();
     return deletedMerchant;
   }
-  async pageCount(){
-    const count=await this.merchantModel.find().count().exec();
+  async pageCount(filterValues: FilterMerchantDto) {
+    const count = await this.merchantModel
+      .find(
+        filterValues.search
+          ? {
+              $or: [
+                { userName: { $regex: filterValues.search, $options: 'i' } },
+                { email: { $regex: filterValues.search, $options: 'i' } },
+              ],
+            }
+          : {isDelete:false},
+      )
+      .count()
+      .exec();
     return count;
-
   }
 }

@@ -43,8 +43,8 @@ export class MerchantsController {
     return await this.merchantsService.update(id, updateMerchantDto);
   }
   @Post('/pageCount')
-  async pageCount() {
-   return await this.merchantsService.pageCount();
+  async pageCount(@Body() filterValues:FilterMerchantDto) {
+   return await this.merchantsService.pageCount(filterValues);
   }
 
 }

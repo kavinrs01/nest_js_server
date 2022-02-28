@@ -6,33 +6,35 @@ export type MerchantDocument = Merchant & Document;
 @Schema()
 export class Merchant {
   @Prop()
-  userName: String;
+  userName: string;
   @Prop()
-  email: String;
+  email: string;
   @Prop()
-  phoneNumber: Number;
+  phoneNumber: string;
   @Prop()
-  website: String;
+  website: string;
   @Prop()
-  contactName: String;
+  contactName: string;
   @Prop()
-  contactPhone: String;
+  contactPhone: string;
   @Prop()
-  contactEmail: String;
+  contactEmail: string;
   @Prop()
-  notes: String;
+  notes: string;
   @Prop()
-  typeOfBusiness: String;
+  typeOfBusiness: string;
   @Prop()
   catageryOfBusiness: string[];
   @Prop()
-  comissionPercentage: Number;
+  comissionPercentage: number;
   @Prop()
   activeFrom: Date;
   @Prop()
-  criticalAccount: Boolean;
+  criticalAccount: boolean;
   @Prop()
   paymentOption: string[];
+  @Prop()
+  isDelete: boolean;
 }
 
 export const MerchantSchema = SchemaFactory.createForClass(Merchant);
