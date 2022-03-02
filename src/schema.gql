@@ -1,0 +1,61 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type MerchantModel {
+  userName: String
+  email: String
+  phoneNumber: String
+  website: String
+  contactName: String
+  contactPhone: String
+  contactEmail: String
+  notes: String
+  typeOfBusiness: String
+  catageryOfBusiness: [String!]
+  comissionPercentage: Float
+  activeFrom: DateTime
+  criticalAccount: Boolean
+  paymentOption: [String!]
+  _id: String
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  getAllMerchant(filterValues: FilterMerchantDto!, dataSkip: Float!): [MerchantModel!]!
+  getSelectedRowDetail(_id: String!): MerchantModel!
+  getMerchantCount(filterValues: FilterMerchantDto!): Float!
+}
+
+input FilterMerchantDto {
+  search: String
+  sortBy: String
+  sortOrder: Float
+}
+
+type Mutation {
+  createMerchant(merchantDetail: MerchantDto!): MerchantModel!
+  updateMerchant(merchantDetail: MerchantDto!, _id: String!): MerchantModel!
+  deleteMerchant(_id: String!): MerchantModel!
+}
+
+input MerchantDto {
+  userName: String
+  email: String
+  phoneNumber: String
+  website: String
+  contactName: String
+  contactPhone: String
+  contactEmail: String
+  notes: String
+  typeOfBusiness: String
+  catageryOfBusiness: [String!]
+  comissionPercentage: Float
+  activeFrom: DateTime
+  criticalAccount: Boolean
+  paymentOption: [String!]
+}
